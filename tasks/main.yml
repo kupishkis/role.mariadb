@@ -1,0 +1,20 @@
+---
+- name: ensure ansible deps are installed
+  sudo: yes
+  apt: pkg={{item}}
+  with_items:
+    - python-mysqldb
+    - python-pycurl
+
+- name: ensure keys for mariadb exist
+  sudo: yes
+  apt_key: url=http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCBCB082A1BB943DB state=present
+
+- name: ensure repositories for mariadb exist
+  sudo: yes
+  apt_repository: repo='deb http://mirrors.supportex.net/mariadb/repo/5.5/debian wheezy main' state=present update_cache=yes
+
+- name: ensure mariadb is installed
+  sudo: yes
+  apt: pkg=mariadb-server state=latest
+
