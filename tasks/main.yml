@@ -1,11 +1,4 @@
 ---
-- name: ensure ansible deps are installed
-  sudo: yes
-  apt: pkg={{item}}
-  with_items:
-    - python-mysqldb
-    - python-pycurl
-
 - name: ensure keys for mariadb exist
   sudo: yes
   apt_key: url=http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCBCB082A1BB943DB state=present
@@ -17,6 +10,7 @@
 - name: ensure mariadb is installed
   sudo: yes
   apt: pkg=mariadb-server state=latest
+  notify: restart mysql
 
 - name: ensure mariadb listens on external address
   sudo: yes
