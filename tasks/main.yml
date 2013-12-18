@@ -18,3 +18,8 @@
   sudo: yes
   apt: pkg=mariadb-server state=latest
 
+- name: ensure mariadb listens on external address
+  sudo: yes
+  lineinfile: dest=/etc/mysql/my.cnf state=absent regexp='^bind-address.*'
+  notify: restart mysql
+  when: mariadb_exposed is defined and mariadb_exposed
