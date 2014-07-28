@@ -17,3 +17,7 @@
   lineinfile: dest=/etc/mysql/my.cnf state=absent regexp='^bind-address.*'
   notify: restart mysql
   when: mariadb_exposed is defined and mariadb_exposed
+
+- name: set MariaDB server to UTC
+  sudo: yes
+  template: dest=/etc/mysql/conf.d/callcenter.cnf src=callcenter.cnf.j2
